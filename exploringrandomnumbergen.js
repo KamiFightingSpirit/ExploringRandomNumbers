@@ -28,11 +28,13 @@ class Random {
         this.seed = x;
         this.increment = c;
         this.modulus = m;
+        this.currentRandomValue = 0;
+        this.Randu = -1;
     }
 
     nextInt() {
-        this.seed = (this.multiplier * this.seed + this.increment) % this.modulus;
-        // this.seed = nextInt;
+        //This is to demonstrate that simply plugging in your own variables quickly falls apart
+        this.currentRandomValue = (this.multiplier * this.seed + this.increment) % this.modulus;
         return this.seed; //if I return this seed, am I changing the future ones?   
     }
 
@@ -44,7 +46,42 @@ class Random {
 
 //Testing out my class:
 let random = new Random(5, 0, 2, 25);
-console.log("hello");
 console.log(random.seed, random.increment, random.modulus);
 console.log(random.nextInt());
 console.log(random.nextInt());
+console.log("******END TESTING OF MY RANDOM CLASS******")
+
+
+ /*
+  * special case of random algorithm that was widely used from the 1960s to the early 1970s, generated questionable results due to 
+  * using 2^31 as the modulus, when this LCG produces points (xk, xk+1, xk+2) in 3-dimensional space, the points fall into 
+  * no more than 2,344 parallel planes, a result which indicates an LCG is unsuitable for Monte Carlo simulation
+  * This misbehavior was already detected in 1963 on a 36-bit computer,
+  * It was believed to have been widely purged by the early 1990s but there were still FORTRAN compilers using it as late as 1999.
+  * Source: https://en.wikipedia.org/wiki/RANDU
+  */
+
+class Randu {
+    constructor(x) {
+        this.seed = x;
+        this.multiplier = 65539;        
+        this.modulus = Math.pow(2, 31);
+        this.rational = 0;
+    }
+    nextRandu() {
+        this.seed = (this.multiplier * this.seed) % this.modulus;
+        // return this.seed;
+        this.rational = this.seed / Math.pow(2, 31);
+        return this.rational;
+    }
+}
+//Testing out the Randu Class:
+//I expect better results from a humans point of view:
+let randu = new Randu(1);
+let i = 0;
+while(i < 20) {
+    console.log(randu.nextRandu());
+    i++;
+}
+
+
