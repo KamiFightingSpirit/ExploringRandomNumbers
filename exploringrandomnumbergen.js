@@ -50,6 +50,7 @@ console.log(random.seed, random.increment, random.modulus);
 console.log(random.nextInt());
 console.log(random.nextInt());
 console.log("******END TESTING OF MY RANDOM CLASS******")
+console.log("******BEGIN TESTING OF RANDU CLASS******")
 
 
  /*
@@ -79,9 +80,51 @@ class Randu {
 //I expect better results from a human's point of view:
 let randu = new Randu(1);
 let i = 0;
-while(i < 20) {
+while(i < 10) {
     console.log(randu.nextRandu());
     i++;
 }
 
+console.log("******END TESTING OF RANDU CLASS******")
+console.log("******BEGIN TESTING OF LEHMER CLASS******")
 
+/*
+ * The Lehmer random number generator is a type of LCG that operates in multiplicative group of integers modulo n.
+ * It is also called the Park–Miller random number generator, multiplicative linear congruential generator (MLCG),
+ * and multiplicative congruential generator (MCG).
+ * 
+ * The general formula is:
+ * Xk+1 = α * Xk % m
+ * Where:
+ * 1. The modulus, m, is a prime number or a power of a prime number
+ * 2. The multiplier α is an element of high multiplicative order modulo m (e.g., a primitive root modulo n)
+ * 3. The seed X0 is coprime to m
+ *
+ * Source: https://en.wikipedia.org/wiki/Lehmer_random_number_generator
+ */
+
+class Lehmer {
+    //In 1988, Park and Miller suggested a Lehmer RNG with particular parameters m = 2^31 − 1 = 2,147,483,647 (a Mersenne prime M31)
+    //A Mersenne prime is a prime that is one less than a power of two : e.g. Mn = 2^n - 1
+    //and a = 75 = 16,807 (a primitive root modulo M31). This setup is now known as MINSTD. 
+    //Later they suggested the  use of the multiplier a = 48271 in place of 16807.
+    //Notes: by default this class will instantiate to the updated MINSTD
+    constructor (α, x, m) {
+        let isPrime = checkPrime(m);
+        if( (α > m || α <= 0) || (x > m || x < 0) || (c > m || c < 0) ) {
+            throw new Error("Sorry, make sure your parameters are all less than m and greater than 0. Except for α which can equal zero.");
+        } else {
+            console.log("New Random class created!");
+        }
+        α = α ? α : 48271;
+        x = x ? x : 
+        m = m ? m : Math.pow(2, 31) - 1;
+    }
+}
+
+function checkPrime(num) {
+    for(let i = 2, s = Math.sqrt(num); i <= s; i++) {
+        if(num % i === 0) return false; 
+    }
+    return num > 1;
+}
