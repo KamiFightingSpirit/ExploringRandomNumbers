@@ -53,11 +53,11 @@ console.log("******END TESTING OF MY RANDOM CLASS******")
 
 
  /*
-  * special case of random algorithm that was widely used from the 1960s to the early 1970s, generated questionable results due to 
-  * using 2^31 as the modulus, when this LCG produces points (xk, xk+1, xk+2) in 3-dimensional space, the points fall into 
-  * no more than 2,344 parallel planes, a result which indicates an LCG is unsuitable for Monte Carlo simulation
-  * This misbehavior was already detected in 1963 on a 36-bit computer,
-  * It was believed to have been widely purged by the early 1990s but there were still FORTRAN compilers using it as late as 1999.
+  * Implementing Randu, a special case of random algorithm that was widely used from the 1960s to the early 1970s, generated
+  * questionable results due to using 2^31 as the modulus, when this LCG produces points (xk, xk+1, xk+2) in 3-dimensional space, 
+  * the points fall into no more than 2,344 parallel planes, a result which indicates an LCG is unsuitable for Monte Carlo simulation
+  * This misbehavior was already detected in 1963, it was believed to have been widely purged by the early 1990s but there were 
+  * still FORTRAN compilers using it as late as 1999.
   * Source: https://en.wikipedia.org/wiki/RANDU
   */
 
@@ -76,7 +76,7 @@ class Randu {
     }
 }
 //Testing out the Randu Class:
-//I expect better results from a humans point of view:
+//I expect better results from a human's point of view:
 let randu = new Randu(1);
 let i = 0;
 while(i < 20) {
