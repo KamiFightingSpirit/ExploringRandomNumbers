@@ -4,6 +4,8 @@
  * https://en.wikipedia.org/wiki/Linear_congruential_generator
  * I've always been curious about how random number generation worked so this file is dedicated to that investigation.
  * 
+ * Some additional reading:
+ * https://www.informs-sim.org/wsc17papers/includes/files/016.pdf
  * ------------------------------------------------------------------------------------------------------------------------------
  * 
  * general form of a linear congruential generator (LCG):
