@@ -86,7 +86,7 @@ while(i < 10) {
 }
 
 console.log("******END TESTING OF RANDU CLASS******")
-console.log("******BEGIN TESTING OF LEHMER CLASS******")
+console.log("******BEGIN TESTING OF MINSTD CLASS******")
 
 /*
  * The Lehmer random number generator is a type of LCG that operates in multiplicative group of integers modulo n.
@@ -103,28 +103,68 @@ console.log("******BEGIN TESTING OF LEHMER CLASS******")
  * Source: https://en.wikipedia.org/wiki/Lehmer_random_number_generator
  */
 
-class Lehmer {
+class Minstd {
     //In 1988, Park and Miller suggested a Lehmer RNG with particular parameters m = 2^31 − 1 = 2,147,483,647 (a Mersenne prime M31)
     //A Mersenne prime is a prime that is one less than a power of two : e.g. Mn = 2^n - 1
     //and a = 75 = 16,807 (a primitive root modulo M31). This setup is now known as MINSTD. 
     //Later they suggested the  use of the multiplier a = 48271 in place of 16807.
     //Notes: by default this class will instantiate to the updated MINSTD
     constructor (α, x, m) {
+        //is this actually stopping the creation of the class?
         let isPrime = checkPrime(m);
-        if( (α > m || α <= 0) || (x > m || x < 0) || (c > m || c < 0) ) {
+        let isPrimitiveRoot = α === checkPrimitiveRoot(α, m);
+        if( !isPrime && () ) {
             throw new Error("Sorry, make sure your parameters are all less than m and greater than 0. Except for α which can equal zero.");
         } else {
             console.log("New Random class created!");
         }
-        α = α ? α : 48271;
-        x = x ? x : 
-        m = m ? m : Math.pow(2, 31) - 1;
+        this.multiplier = α ? α : 48271;
+        this.seed = x ? x : 
+        this.modulus = m ? m : Math.pow(2, 31) - 1;
     }
-}
 
+
+    
+}
 function checkPrime(num) {
     for(let i = 2, s = Math.sqrt(num); i <= s; i++) {
         if(num % i === 0) return false; 
     }
     return num > 1;
 }
+function checkPrimitiveRoot(primitiveRoot, prime) {
+    //If the multiplicative order of a number r modulo n is equal to Euler Totient Function Φ(n) 
+    //(Note that Euler Totient Function for a prime n is n-1), then it is a primitive root [Source : Wiki]
+    if (isPrime = false) { return -1 }
+    //Since prime is a prime number, the Euler Quotient (phi) is prime - 1
+    let phi  = prime - 1,
+        primeMap = {};
+    
+    findPrimefactors(primeMap, phi);
+
+
+}
+
+function findPrimefactors(primeMap, n) {
+    while (n % 2 == 0) {
+        primeMap.add(2);
+        n = n / 2;
+     }
+
+    // n must be odd at this point. So we can skip
+    // one element (Note i = i +2)
+    for (let i = 3; i <= Math.sqrt(n); i = i + 2) {
+         // While i divides n, print i and divide n
+        while (n % i == 0) {
+            primeMap.add(i);
+            n = n / i;
+        }
+    }
+
+    // This condition is to handle the case when
+    // n is a prime number greater than 2
+    if (n > 2) {
+        primeMap.add(n);
+    }
+}
+let test = new Minstd();
